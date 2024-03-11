@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { Genre } = require('../enums/bookEnums');
+const mongoose = require("mongoose");
+const { Genre } = require("../enums/bookEnums");
 
 const authorSchema = mongoose.Schema({
   name: {
@@ -17,23 +17,26 @@ const authorSchema = mongoose.Schema({
 const bookSchema = mongoose.Schema({
   title: String,
   authors: [authorSchema],
-  yearOfRelease: Number,
+  yearOfRelease: {
+    type: Number,
+    required: true,
+  },
   ratings: [Number],
-  inStock: Number,
-  isbn: String,
-  numberOfPages: Number,
-  description: String,
+  description: {
+    type: String,
+    required: true,
+  },
   genre: {
     type: [String],
     enum: [Genre.Thriller, Genre.SciFi, Genre.Fiction, Genre.Undefined],
     default: Genre.Undefined,
   },
-  rentedTo: {
+  editions: {
     type: [mongoose.Types.ObjectId],
-    ref: 'User',
+    ref: "Edition",
   },
 });
 
-const Book = mongoose.model('Book', bookSchema);
+const Book = mongoose.model("Book", bookSchema);
 
 module.exports = Book;

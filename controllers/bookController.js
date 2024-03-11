@@ -1,12 +1,12 @@
-const asyncHandler = require('express-async-handler');
+const asyncHandler = require("express-async-handler");
 
-const Book = require('../models/bookModel');
+const Book = require("../models/bookModel");
 
 // @desc    Get all books from DB
 // @route   GET /books
 // @access  Public
 const getBooks = asyncHandler(async (req, res) => {
-  const books = await Book.find({}).populate('rentedTo');
+  const books = await Book.find({}).populate("editions");
   res.json(books);
 });
 
@@ -14,15 +14,14 @@ const getBooks = asyncHandler(async (req, res) => {
 // @route   POST /books
 // @access  Public
 const createBook = asyncHandler(async (req, res) => {
-  const { title, genre, authors, isbn, yearOfRelease, rentedTo } = req.body;
+  const { title, genre, authors, yearOfRelease, description } = req.body;
 
   const book = new Book({
     title,
     genre,
     authors,
-    isbn,
     yearOfRelease,
-    rentedTo,
+    description,
   });
   const newBook = await book.save();
 
@@ -40,7 +39,7 @@ const deleteBook = asyncHandler(async (req, res) => {
   // Ako ne postoji, vracamo 404 Not Found
   if (!book) {
     res.status(404);
-    throw new Error('The book with given ID does not exist.');
+    throw new Error("The book with given ID does not exist.");
   }
 
   // Ako postoji, brisemo i vracamo taj objekat koji smo obrisali
