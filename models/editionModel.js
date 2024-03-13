@@ -30,10 +30,6 @@ const editionSchema = mongoose.Schema({
     required: true,
     default: 0,
   },
-  rentedTo: {
-    type: [mongoose.Types.ObjectId],
-    ref: "Client",
-  },
 });
 
 const Edition = mongoose.model("Edition", editionSchema);

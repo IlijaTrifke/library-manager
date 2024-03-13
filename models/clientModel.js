@@ -5,9 +5,22 @@ const clientSchema = mongoose.Schema({
     type: "string",
     requited: true,
   },
-  rentedEditions: {
-    type: [mongoose.Types.ObjectId],
-    ref: "Edition",
+  email: {
+    type: "string",
+    required: true,
+    unique: true,
+  },
+  isPremium: {
+    type: "boolean",
+    default: false,
+  },
+  membershipStart: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+  memmbershipEnd: {
+    type: Date,
   },
 });
 
